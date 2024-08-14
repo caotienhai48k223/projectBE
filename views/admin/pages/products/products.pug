@@ -1,0 +1,53 @@
+extends ../../layouts/default
+
+block main 
+  h1 Quản lý sản phẩm
+
+  .card.mb-3 
+    .card-header Bộ lọc và Tìm kiếm 
+    .card-body
+      .col-6
+        each item in filterStatus
+          button(class=`btn btn-sm ml-1 btn-outline-success ${item.class}` button-status=item.status) #{item.name}
+      .col-6
+        form(id='form-search')
+          .input-group 
+            input.form-control(
+              type='text'
+              placeholder='Nhập từ khóa'
+              name='keyword'
+              value=keyword
+            )
+            .input-group-append 
+              button.btn.btn-success(
+                type='submit'
+              ) Search
+
+  .card.mb-3 
+    .card-header Danh Sách Sản Phẩm
+      .card-body
+        table.table.table-hover.table-sm
+          thead 
+            tr 
+              th STT 
+              th Hình Ảnh
+              th Tiêu Đề
+              th Giá
+              th Trạng Thái Kho 
+              th Hành Động
+          
+          tbody 
+            each item, index in products
+              tr
+                td #{index+1}
+                td.pro-img
+                  img(src=item.thumbnail alt=item.title)
+                td #{item.title}
+                td #{item.price}
+                td 
+                  a(href='#' class=`${item.availabilityStatus=='In Stock' ? 'badge text-bg-success' :'badge text-bg-danger'}`) #{item.availabilityStatus}
+                td 
+                  button.btn.btn-warning.btn-sm Sửa
+                  button.btn.btn-danger.btn-sm.ml-1 Xóa
+
+       
