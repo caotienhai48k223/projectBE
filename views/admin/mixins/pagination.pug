@@ -1,0 +1,63 @@
+mixin pagination (pagination)
+  nav 
+    //- Mũi tên chuyển hướng trái
+    ul.pagination
+      if (pagination.currentPage > 1) 
+        li.page-item 
+          button.page-link(button-pagination = 1)
+            i.fa-solid.fa-angles-left
+        li.page-item 
+          button.page-link(button-pagination = pagination.currentPage - 1) 
+            i.fa-solid.fa-angle-left
+
+      //- Logic chuyển page
+      if (pagination.currentPage > 2)
+        if (pagination.currentPage >= pagination.totalPage - 2)
+          li.page-item 
+            button.page-link(button-pagination = 1) 1
+          li.page-item 
+            button.page-link ...
+          - for(var i = pagination.currentPage - 2 ; i <= pagination.totalPage; i++) 
+            li(class=`page-item ${pagination.currentPage == i ? 'active':''}`)
+              button.page-link(button-pagination = i) #{i}
+        else 
+          - for(var i = pagination.currentPage - 2; i <= pagination.totalPage; i++) 
+            li(class=`page-item ${pagination.currentPage == i ? 'active':''}`)
+              button.page-link(button-pagination = i) #{i}
+            if (i > pagination.currentPage + 1 && i<pagination.totalPage-1)
+              li.page-item
+                button.page-link ...
+              li.page-item 
+                button.page-link(button-pagination = pagination.totalPage) #{pagination.totalPage}
+              - break
+        
+      else
+        if (pagination.currentPage < 2)
+          - for(var i = pagination.currentPage; i <= pagination.totalPage; i++) 
+            li(class=`page-item ${pagination.currentPage == i ? 'active':''}`)
+              button.page-link(button-pagination = i) #{i}
+            if (i > pagination.currentPage + 1 && i<pagination.totalPage - 1)
+              li.page-item
+                button.page-link ...
+              li.page-item 
+                button.page-link(button-pagination = pagination.totalPage) #{pagination.totalPage}
+              - break
+        else
+          - for(var i = pagination.currentPage - 1; i <= pagination.totalPage; i++) 
+            li(class=`page-item ${pagination.currentPage == i ? 'active':''}`)
+              button.page-link(button-pagination = i) #{i}
+            if (i > pagination.currentPage + 1 && i < pagination.totalPage - 1)
+              li.page-item
+                button.page-link ...
+              li.page-item 
+                button.page-link(button-pagination = pagination.totalPage) #{pagination.totalPage}
+              - break
+
+      //- Mũi tên chuyển hướng phải 
+      if (pagination.currentPage < pagination.totalPage)
+        li.page-item 
+          button.page-link(button-pagination = pagination.currentPage + 1)
+            i.fa-solid.fa-angle-right
+        li.page-item 
+          button.page-link(button-pagination = pagination.totalPage)
+            i.fa-solid.fa-angles-right

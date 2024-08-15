@@ -1,32 +1,14 @@
 const Product = require('../../models/product-model')
 
+const filterStatusHelper = require('../../helpers/filter-status')
+
+const searchHelper = require('../../helpers/search')
+
+const paginationHelper = require('../../helpers/pagination')
 
 module.exports.products = async (req, res)=> {
-  const filterStatus = [
-    {
-      name:"All Product",
-      status:"",
-      class:""
-    },
-    {
-      name:"In Stock",
-      status:"In Stock",
-      class:""
-    },
-    {
-      name:"Low Stock",
-      status: "Low Stock",
-      class:""
-    }
-  ]
 
-  if (req.query.availabilityStatus) {
-    const index = filterStatus.findIndex(item => item.status == req.query.availabilityStatus)
-    filterStatus[index].class='active'
-  } else {
-    const index = filterStatus.findIndex(item => item.status == "")
-    filterStatus[index].class='active'
-  }
+  const filterStatus = filterStatusHelper(req.query)
 
   const find = {
     deleted: false
@@ -35,19 +17,28 @@ module.exports.products = async (req, res)=> {
   if (req.query.availabilityStatus) {
     find.availabilityStatus = req.query.availabilityStatus
   }
-
-  let keyword = ""
-  if (req.query.keyword) {
-    keyword=req.query.keyword
-    const regex = new RegExp(keyword, "i")
-    find.title = regex
+  
+  const objectSearch = searchHelper(req.query)
+  
+  if (objectSearch.regex) {
+    find.title = objectSearch.regex
   }
 
-  const products = await Product.find(find)
+  const countProduct = await Product.countDocuments(find)
+
+  let objectPagination = paginationHelper({
+    currentPage: 1,
+    limitItems: 1
+  }, req.query, countProduct)
+
+
+  const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip)
+
   res.render('admin/pages/products/products', {
     pageTitle: "Quản Lý Sản Phẩm",
     products: products,
     filterStatus: filterStatus,
-    keyword: keyword
+    keyword: objectSearch.keyword,
+    pagination: objectPagination
   })
 }
