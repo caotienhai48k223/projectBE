@@ -2,23 +2,30 @@ extends ../../layouts/default
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 
 block main 
   h1 Quản lý sản phẩm
 
   .card.mb-3 
     .card-header Bộ lọc và Tìm kiếm 
-    .card-body
-      .col-6
+    .d-flex.card-body
+      .d-flex.col-6.align-items-center.gap-2
         +filter-status(filterStatus)
       .col-6
         +search(keyword)
   .card.mb-3 
     .card-header Danh Sách Sản Phẩm
       .card-body
-        table.table.table-hover.table-sm
+        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        
+        table.table.table-hover.table-sm(
+          checkbox-multi
+        )
           thead 
-            tr 
+            tr
+              th 
+                input(type='checkbox' name='checkall')
               th STT 
               th Hình Ảnh
               th Tiêu Đề
@@ -29,18 +36,48 @@ block main
           tbody 
             each item, index in products
               tr
+                td 
+                  input(
+                    type='checkbox'
+                    name='id'
+                    value=item.id
+                  )
                 td #{index+1}
                 td.pro-img
                   img(src=item.thumbnail alt=item.title)
                 td #{item.title}
                 td #{item.price}$
                 td 
-                  a(href='#' class=`${item.availabilityStatus=='In Stock' ? 'badge text-bg-success' :'badge text-bg-danger'}`) #{item.availabilityStatus}
+                  if(item.availabilityStatus == 'In Stock')
+                    a(
+                      href='javascript:;'
+                      data-status = item.availabilityStatus
+                      data-id = item.id
+                      button-change-status
+                      class = 'badge text-bg-success'
+                    ) In Stock
+                  else 
+                    a(
+                      href='javascript:;'
+                      data-status = item.availabilityStatus
+                      data-id = item.id
+                      button-change-status 
+                      class = 'badge text-bg-danger'
+                    ) Low Stock
                 td 
                   button.btn.btn-warning.btn-sm Sửa
                   button.btn.btn-danger.btn-sm.ml-1 Xóa
 
   +pagination(pagination)
+
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status`
+  ) 
+
+  script(src="/admin/js/product.js") 
   
 
        

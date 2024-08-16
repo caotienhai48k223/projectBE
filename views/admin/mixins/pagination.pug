@@ -12,7 +12,7 @@ mixin pagination (pagination)
 
       //- Logic chuyển page
       if (pagination.currentPage > 2)
-        if (pagination.currentPage >= pagination.totalPage - 2)
+        if (pagination.currentPage >= pagination.totalPage - 2 && pagination.currentPage>4)
           li.page-item 
             button.page-link(button-pagination = 1) 1
           li.page-item 

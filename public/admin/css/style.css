@@ -45,10 +45,6 @@
 }
 
 /* CSS Product Admin */
-.card-body {
-  display: flex;
-  gap: 3px;
-}
 .pro-img {
   width: 80px;
   /* aspect-ratio: 5/3; */

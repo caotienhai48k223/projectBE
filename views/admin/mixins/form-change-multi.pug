@@ -1,0 +1,18 @@
+mixin form-change-multi(path)
+  form(
+    action=path
+    method='POST'
+    form-change-multi
+  )
+    .d-flex.align-items-start.gap-2
+      .form-group
+        select(name='type' class="form-select" aria-label="Disabled select example")
+          option(value='In Stock') In Stock
+          option(value='Low Stock') Low Stock
+      .form-group.d-none
+        input(
+          type='text'
+          name='ids'
+          value=''
+        )
+      button(type='submit' class='btn btn-primary') Apply

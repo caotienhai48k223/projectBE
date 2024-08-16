@@ -1,7 +1,14 @@
-const express = require("express")
-const router = express.Router()
-const productsController = require('../../controllers/admin/product-controller')
+const express = require("express");
+const router = express.Router();
+const productsController = require("../../controllers/admin/product-controller");
 
-router.get('/', productsController.products)
+router.get("/", productsController.products);
 
-module.exports = router
+router.patch(
+  "/change-status/:availabilityStatus/:id",
+  productsController.changeStatus
+);
+
+router.patch("/change-multi", productsController.changeMulti);
+
+module.exports = router;
