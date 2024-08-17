@@ -96,21 +96,42 @@ if (formChangeMulti) {
   formChangeMulti.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const checkboxMulti = document.querySelector("[checkbox-multi]");
-    const inputsChecked = checkboxMulti.querySelectorAll(
-      "input[name='id']:checked"
-    );
-    if (inputsChecked.length > 0) {
-      let ids = [];
-      const inputIds = formChangeMulti.querySelector("input[name='ids']");
-      inputsChecked.forEach((input) => {
-        const id = input.value;
-        ids.push(id);
-      });
-      inputIds.value = ids.join(", ");
-      formChangeMulti.submit();
+    if (e.target.elements.type.value == "--Choose Action--") {
+      alert("Vui lòng chọn hành động");
+      return;
     } else {
-      alert("Vui lòng chọn ít nhất một bản ghi!");
+      const checkboxMulti = document.querySelector("[checkbox-multi]");
+      const inputsChecked = checkboxMulti.querySelectorAll(
+        "input[name='id']:checked"
+      );
+
+      if (inputsChecked.length > 0) {
+        const typeChange = e.target.elements.type.value;
+        if (typeChange == "delete-all") {
+          const isConfirm = confirm("Delete All Product?");
+          if (!isConfirm) {
+            return;
+          }
+        }
+
+        if (typeChange == "restore-all") {
+          const isConfirm = confirm("Restore All Product?");
+          if (!isConfirm) {
+            return;
+          }
+        }
+
+        let ids = [];
+        const inputIds = formChangeMulti.querySelector("input[name='ids']");
+        inputsChecked.forEach((input) => {
+          const id = input.value;
+          ids.push(id);
+        });
+        inputIds.value = ids.join(", ");
+        formChangeMulti.submit();
+      } else {
+        alert("Vui lòng chọn ít nhất một bản ghi!");
+      }
     }
   });
 }

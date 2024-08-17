@@ -1,4 +1,4 @@
-mixin form-change-multi(path)
+mixin form-change-multi-rb(path)
   form.col-6(
     action=path
     method='POST'
@@ -10,7 +10,7 @@ mixin form-change-multi(path)
           option(disable selected) --Choose Action--
           option(value='In Stock') In Stock
           option(value='Low Stock') Low Stock
-          option(value='delete-all') Delete All
+          option(value='restore-all') Restore All
       .form-group.d-none
         input(
           type='text'

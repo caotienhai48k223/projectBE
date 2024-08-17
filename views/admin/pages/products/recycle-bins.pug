@@ -2,7 +2,7 @@ extends ../../layouts/default
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
-include ../../mixins/form-change-multi.pug
+include ../../mixins/form-change-multi-rb.pug
 
 block main 
   h1 Thùng Rác
@@ -17,7 +17,7 @@ block main
   .card.mb-3 
     .card-header Danh Sách Sản Phẩm
       .card-body
-        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        +form-change-multi-rb(`${prefixAdmin}/products/change-multi?_method=PATCH`)
         
         table.table.table-hover.table-sm(
           checkbox-multi

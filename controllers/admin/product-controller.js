@@ -74,6 +74,24 @@ module.exports.changeMulti = async (req, res) => {
         { availabilityStatus: "Low Stock" }
       );
       break;
+    case "delete-all":
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        {
+          deleted: true,
+          deleteDate: new Date(),
+        }
+      );
+      break;
+    case "restore-all":
+        await Product.updateMany(
+          { _id: { $in: ids } },
+          {
+            deleted: false,
+            restoreDate: new Date(),
+          }
+        );
+        break;
     default:
       break;
   }
