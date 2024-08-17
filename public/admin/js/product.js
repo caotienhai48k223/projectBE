@@ -74,8 +74,8 @@ if (buttonDeletePermanent.length > 0) {
       if (isConfirm) {
         const id = button.getAttribute("data-id");
         const action = pathDeletePermanent + `/${id}?_method=DELETE`;
-        formDeleteItem.action = action;
-        formDeleteItem.submit();
+        formDeletePermanentItem.action = action;
+        formDeletePermanentItem.submit();
       }
     });
   });

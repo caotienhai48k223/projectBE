@@ -3,8 +3,12 @@ include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi-rb.pug
+include ../../mixins/alert.pug
 
 block main 
+
+  +alert-success(5000)
+
   h1 Thùng Rác
 
   .card.mb-3 

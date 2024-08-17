@@ -1,0 +1,8 @@
+mixin alert-success(time)
+  -if (messages.success)
+    .message.info(date-time=time show-alert)
+      .alert.alert-success.d-flex.gap-2.align-items-center
+        i.fa-solid.fa-circle-check
+        span #{messages.success}
+        .close-alert
+          i.fa-regular.fa-circle-xmark

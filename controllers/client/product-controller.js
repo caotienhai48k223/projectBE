@@ -1,17 +1,20 @@
-const Product = require('../../models/product-model')
+const Product = require("../../models/product-model");
 
-module.exports.products = async (req, res)=> {
+module.exports.products = async (req, res) => {
   const products = await Product.find({
     availabilityStatus: "In Stock",
-    deleted: false
-  })
-  const newProducts = products.map(item => {
-    item.newPrice = (item.price - item.price*0.01*item.discountPercentage).toFixed(2)
-    return item
-  })
+    deleted: false,
+  }).sort({ position: "desc" });
+  const newProducts = products.map((item) => {
+    item.newPrice = (
+      item.price -
+      item.price * 0.01 * item.discountPercentage
+    ).toFixed(2);
+    return item;
+  });
 
-  res.render('client/pages/products/products', {
+  res.render("client/pages/products/products", {
     pageTitle: "Sản Phẩm",
-    products: newProducts
-  })
-}
+    products: newProducts,
+  });
+};

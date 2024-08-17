@@ -3,8 +3,12 @@ include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
 
-block main 
+block main
+
+  +alert-success(5000)
+
   h1 Quản lý sản phẩm
 
   .card.mb-3 
@@ -17,7 +21,13 @@ block main
   .card.mb-3 
     .card-header Danh Sách Sản Phẩm
       .card-body 
-        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .row
+          .col-8
+            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+          .col-4
+            a.btn.btn-outline-success(
+              href=`${prefixAdmin}/products/create`
+            ) + Add New
         
         table.table.table-hover.table-sm(
           checkbox-multi
@@ -30,6 +40,7 @@ block main
               th Hình Ảnh
               th Tiêu Đề
               th Giá
+              th Vị Trí
               th Trạng Thái Kho 
               th Hành Động
           
@@ -47,6 +58,14 @@ block main
                   img(src=item.thumbnail alt=item.title)
                 td #{item.title}
                 td #{item.price}$
+                td 
+                  input(
+                    type="number"
+                    value=item.position 
+                    style="width: 60px"
+                    min="1"
+                    name="position"
+                  )
                 td 
                   if(item.availabilityStatus == 'In Stock')
                     a(
@@ -69,7 +88,7 @@ block main
                     i.fa-solid.fa-screwdriver-wrench
                   button.btn.btn-danger.btn-sm.ml-1(data-id = item.id button-delete)
                     i.fa-solid.fa-trash
-  .d-flex 
+  .row
     .col-8
       +pagination(pagination)
     .col-4.d-flex.align-items-start.justify-content-center

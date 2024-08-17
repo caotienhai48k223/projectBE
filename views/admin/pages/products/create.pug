@@ -1,0 +1,103 @@
+extends ../../layouts/default.pug
+
+block main 
+  h1.mb-4 Thêm Mới Sản Phẩm 
+
+  form(
+    action=`${prefixAdmin}/products/create`
+    enctype="multipart/form-data"
+    id="form-create-product"
+    method="POST"
+  )
+    .form-group.mb-3
+      label(for="title") Tiêu Đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+      )
+    .form-group.mb-3 
+      label(for="desc") Mô Tả
+      textarea(
+        class="form-control"
+        id="desc"
+        name="description"
+        rows="5"
+      ) 
+    .form-group.mb-3 
+      label(for="price") Giá
+      input(
+        type="number"
+        class="form-control"
+        id="price"
+        name="price"
+        value="0"
+        min="0"
+      )
+    .form-group.mb-3 
+      label(for="discount") % Giảm Giá
+      input(
+        type="number"
+        class="form-control"
+        id="discount"
+        name="discountPercentage"
+        value="0"
+        min="0"
+      )
+    .form-group.mb-3  
+      label(for="stock") Số Lượng
+      input(
+        type="number"
+        class="form-control"
+        id="stock"
+        name="stock"
+        value="0"
+        min="0"
+      )
+    .form-group.mb-3  
+      label(for="thumbnail") Ảnh 
+      input(
+        type="file"
+        class="form-control-file"
+        id="thumbnail"
+        name="thumbnail"
+        accept="image/*"
+      )
+    .form-group.mb-3  
+      label(for="position") Vị Trí
+      input(
+        type="number"
+        class="form-control"
+        id="position"
+        name="position"
+        placeholder="Tự động tăng"
+        min="1"
+      )
+    .form-group.form-check.form-check-inline.mb-3  
+      input(
+        type="radio"
+        class="form-check-input"
+        id="availabilityStatus"
+        name="availabilityStatus"
+        value="In Stock"
+        checked
+      )
+      label(for="availabilityStatus" class="form-check-label") In Stock 
+    .form-group.form-check.form-check-inline.mb-3  
+      input(
+        type="radio"
+        class="form-check-input"
+        id="availabilityStatus"
+        name="availabilityStatus"
+        value="Low Stock"
+      )
+      label(for="availabilityStatus" class="form-check-label") Low Stock 
+
+    .form-group.mb-3  
+      button.btn.btn-primary(
+        type="submit"
+      ) Tạo Mới
+
+  script(src="/admin/js/product.js") 
