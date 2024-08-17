@@ -5,7 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 
 block main 
-  h1 Quản lý sản phẩm
+  h1 Thùng Rác
 
   .card.mb-3 
     .card-header Bộ lọc và Tìm kiếm 
@@ -16,7 +16,7 @@ block main
         +search(keyword)
   .card.mb-3 
     .card-header Danh Sách Sản Phẩm
-      .card-body 
+      .card-body
         +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
         
         table.table.table-hover.table-sm(
@@ -65,18 +65,20 @@ block main
                       class = 'badge text-bg-danger'
                     ) Low Stock
                 td
-                  button.btn.btn-warning.btn-sm
+                  button.btn.btn-warning.btn-sm(title='Chỉnh Sửa')
                     i.fa-solid.fa-screwdriver-wrench
-                  button.btn.btn-danger.btn-sm.ml-1(data-id = item.id button-delete)
+                  button.btn.btn-success.btn-sm.ml-1(data-id = item.id button-restore title="Khôi Phục")
+                    i.fa-solid.fa-rotate-right
+                  button.btn.btn-danger.btn-sm.ml-1(data-id = item.id button-delete-permanent title="Xõa Vĩnh Viễn")
                     i.fa-solid.fa-trash
+
   .d-flex 
     .col-8
       +pagination(pagination)
     .col-4.d-flex.align-items-start.justify-content-center
-      a.col-3.d-flex.gap-2.align-items-center.justify-content-center.badge.text-bg-secondary#recycle-bin(href=`${prefixAdmin}/products/deleted`)
-        i.fa-regular.fa-trash-can
-        span Thùng Rác
-    
+      a.col-3.d-flex.gap-2.align-items-center.justify-content-center.badge.text-bg-secondary#recycle-bin(href=`${prefixAdmin}/products`)
+        i.fa-regular.fa-circle-left
+        span Sản Phẩm
 
   form(
     action=""
@@ -88,11 +90,16 @@ block main
   form(
     action=""
     method="POST"
-    id="form-delete-item"
-    data-path=`${prefixAdmin}/products/delete`
+    id="form-restore-item"
+    data-path=`${prefixAdmin}/products/deleted/restore`
+  ) 
+
+  form(
+  action=""
+  method="POST"
+  id="form-delete-permanent-item"
+  data-path=`${prefixAdmin}/products/deleted/delete-permanent`
   ) 
 
   script(src="/admin/js/product.js") 
   
-
-       

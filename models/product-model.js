@@ -10,7 +10,9 @@ const productSchema = new mongoose.Schema(
     availabilityStatus: String,
     position: Number,
     deleted: Boolean,
-    thumbnail: String
+    thumbnail: String,
+    deleteDate: Date,
+    restoreDate: Date
   }
 )
 

@@ -55,3 +55,8 @@
   height: 100%;
   object-fit: cover;
 }
+
+#recycle-bin {
+  font-size: 15px;
+  text-decoration: none;
+}
